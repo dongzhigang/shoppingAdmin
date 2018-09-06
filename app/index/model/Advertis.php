@@ -2,9 +2,9 @@
 namespace app\index\Model;
 use think\Model;
 /**
- * 品牌表
+ * 广告表模型
  */
-class Brand extends Model
+class Advertis extends Model
 {
 	public function getImgAttr($value)
 	{

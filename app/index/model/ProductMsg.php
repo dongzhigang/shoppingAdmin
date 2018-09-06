@@ -6,11 +6,15 @@ use think\Model;
  */
 class ProductMsg extends Model
 {
-	
+	public function getImgAttr($value)
+	{
+		$val = 'shoppingAdmin/'.$value;
+		return $val;
+	}
 	//关联商品主图表
     public function productMaster()
 	{
-		return $this->belongsTo('productMaster','product_id','product_id')->bind('path_img'); 
+		return $this->belongsTo('ProductMaster','product_id','product_id')->bind('path_img'); 
 	}
 	//关联品牌表
     public function brand()
@@ -26,6 +30,16 @@ class ProductMsg extends Model
     public function parameter()
 	{
 		return $this->belongsTo('Parameter','product_id','product_id')->bind('brand_name'); 
+	}
+	//关联商品一级分类表
+    public function cate()
+	{
+		return $this->belongsTo('Cate','Cate_id','id')->bind('Cate_name'); 
+	}
+	//关联商品二级分类表
+    public function sort()
+	{
+		return $this->belongsTo('Sort','Sort_id','id')->bind('Sort_name'); 
 	}
 }
 ?>

@@ -1,10 +1,10 @@
-商品信息表(product_msg)：id(自增)、产品id(product_id)、产品名称(name)、产品缩略图(img)、产品简介(docs)、产品编号(number)、专柜价格(shop_price)、当前价格(at_price )、新品(new_product)、热卖(hot_sale)、在售(sell)、关键词id(antistop_id)、分类id（classify_id）、品牌id(brand_id)、商品参数id(parameter_id)
+商品区域
+
+商品信息表(product_msg)：id(自增)、产品id(product_id)、产品名称(name)、产品缩略图(img)、产品简介(docs)、产品编号(number)、专柜价格(shop_price)、当前价格(at_price )、新品(new_product)、热卖(hot_sale)、在售(sell)、关键词id(antistop_id)、一级分类id（Cate_id）、二级分类id（Sort_id）、品牌id(brand_id)、商品参数id(parameter_id)、上传时间?(time)、
 
 商品分类表一级分类(Cate)：id(分类id自增)、分类名称(Cate_name)、分类图标(icon)、分类图片(img)、分类简介(docs)、
 
 商品分类表二级分类(Sort)：id(分类id自增)、分类名称(Sort_name)、分类图标(icon)、分类图片(img)、分类简介(docs)、一级分类id(Cate_id)、
-
-品牌表(brand)：id(品牌自增)、品牌名称(brand_name)、品牌介绍(recommend)、品牌图片(img)、
 
 商品主图表(product_master)：id(自增)、产品id(product_id)、图片路径(path_img)、上传时间(time)、
 
@@ -17,3 +17,11 @@
 关键词表(antistop)：id(关键词 自增)、关键词(keyword)、
 
 规格/属性表(property)：id(自增)、规格名(name)、规格值(value)、图片(img)
+
+广告区域
+广告表(advertis)：id(自增)、广告标题(title)、广告内容(content)、广告图片(img)、活动链接(path)、是否启用(start)、广告位置(location)
+
+品牌区域】
+品牌表(brand)：id(品牌自增)、品牌名称(brand_name)、品牌介绍(recommend)、品牌图片(img)、最低价格(bot_price)、
+
+常见问题表(generalIssue)：id(自增)、问题(question)、回答(answer)
