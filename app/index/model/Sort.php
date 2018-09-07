@@ -6,6 +6,10 @@ use think\Model;
  */
 class Sort extends Model
 {
-	
+	public function getImgAttr($value)
+	{
+		$val = 'shoppingAdmin/'.$value;
+		return $val;
+	}	
 }
 ?>

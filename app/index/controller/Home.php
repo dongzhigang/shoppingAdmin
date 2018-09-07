@@ -3,8 +3,6 @@ namespace app\index\Controller;
 use think\Controller;
 use app\index\Model\Advertis;
 use app\index\Model\ProductMsg;
-use app\index\Controller\Cassification;														//实例化分类接口
-use app\index\Controller\Product;														//实例化分类接口
 /**
  * 首页接口
  */
@@ -25,8 +23,8 @@ class Home extends Controller
 	//一级分类列表
 	public function cateList() 
 	{
-		$Cassif = new Cassification;	
-		$list = $Cassif -> getCate();	
+		$ProductMsg = new ProductMsg;	
+		$list = $ProductMsg -> cate() ->select();
 		if($list){
 			return $list;
 		}else{
@@ -36,16 +34,13 @@ class Home extends Controller
 	//分类商品列表
 	public function productList()
 	{
-		$Cassif = new Cassification;
-		$Product = new Product;	
 		$ProductMsg = new ProductMsg;
-		$list = $Cassif -> getCate();
-		$array = Array();	
-		if($list){
+		$list = $ProductMsg -> cate() ->select();
+		if($ProductMsg){
 			foreach ($list as $key => $value) {
-				$res = $Product -> cateProduct($value->id,$value->Cate_name);
+				$res = $ProductMsg ->where('Cate_id',$value->id) ->limit(10)->select();
 				if($res){
-					$arrayName = Array('name' => $value->Cate_name,'list' => $res);
+					$arrayName = Array('name' => $value->Cate_name,'id' => $value->id ,'list' => $res);
 					$array[$key] = $arrayName;
 				}
 			}
@@ -59,7 +54,7 @@ class Home extends Controller
 	{
 		$ProductMsg = new ProductMsg;
 		$list = $ProductMsg -> Brand() -> limit(4)->select(); 	
-		if($list){
+		if($ProductMsg){
 			return $list;
 		}else{
 			return flase;
@@ -70,7 +65,7 @@ class Home extends Controller
 	{
 		$ProductMsg = new ProductMsg;
 		$list = $ProductMsg ->where('new_product',1)->order('time desc')->limit(4)->select();
-		if($list){
+		if($ProductMsg){
 			return $list;
 		}else{
 			return flase;
@@ -81,7 +76,7 @@ class Home extends Controller
 	{
 		$ProductMsg = new ProductMsg;
 		$list = $ProductMsg ->where('hot_sale',1)->order('time desc')->limit(4)->select();
-		if($list){
+		if($ProductMsg){
 			return $list;
 		}else{
 			return flase;

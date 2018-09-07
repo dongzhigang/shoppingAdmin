@@ -8,43 +8,45 @@ use app\index\Controller\Product;
  */
 class Cassification extends Controller
 {
-	// 一级分类
-	public function getCate()
-	{
+
+	//分类列表接口
+	public function catalogList()
+	{			
 		$Cate = new Cate;					//实例化模型
-		$List =$Cate -> select();
-		return $List;
-	}
-	// 一级分类
-	public function getSort($id=1)
-	{
-		$Cate = new Cate;					//实例化模型
-		$List =$Cate -> sort()->where('Cate_id',$id) -> select();
-		return $List;
-	}
-	//分类目录当前分类数据接口
-	public function current()
-	{	
-		$id = $_REQUEST['id'];
-		$page = $_REQUEST['page'];
-		$rows = $_REQUEST['rows'];
-		$getSort = $this -> getSort();					//获取二级分类
-		$Product = new Product;
-		$list = $Product -> sortProduct($id,$page,$rows);
+		$getCate =$Cate -> select();
+		$findCate = $Cate ->find();		
+		$getSort = $Cate -> sort()->where('Cate_id',$findCate->id) -> select();					//获得一级分类下的二级分类
 		$data = Array(
-			'currentList'	=>	$getSort,
-			'productList'	=>	$list
+			'cateList'	=>	$getCate,
+			'sortList'	=>	$getSort,
+			'findCate'	=>	$findCate
 		);
-		if($getSort){
+		if($Cate){
 			$arrayName = array('code' => 0,'data' => $data ,'msg' => "加载成功" );
 		}else{
 			$arrayName = array('code' => 0,'data' => Array() ,'msg' => "加载失败" );
 		}
 		return json($arrayName);
 	}
-	public function catalogList()
+	//分类目录当前分类数据接口
+	public function current()
 	{
+		$id = $_REQUEST['id'];					//一级分类id
+		$Cate = new Cate;					//实例化模型
+		$findCate = $Cate-> where('id',$id) ->find();		
+		$getSort = $Cate -> sort()->where('Cate_id',$id) -> select();					//获得一级分类下的二级分类
+		$data = Array(
+			'sortList'	=>	$getSort,
+			'findCate'	=>	$findCate
+		);
+		if($Cate){
+			$arrayName = array('code' => 0,'data' => $data ,'msg' => "加载成功" );
+		}else{
+			$arrayName = array('code' => 0,'data' => Array() ,'msg' => "加载失败" );
+		}
+		return json($arrayName);
 
 	}
+	
 }
 ?>

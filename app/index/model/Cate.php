@@ -11,6 +11,11 @@ class Cate extends Model
 		$val = 'shoppingAdmin/'.$value;
 		return $val;
 	}	
+	public function getImgAttr($value)
+	{
+		$val = 'shoppingAdmin/'.$value;
+		return $val;
+	}	
 	//关联二级分类表
     public function sort()
 	{
