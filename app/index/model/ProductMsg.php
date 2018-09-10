@@ -34,12 +34,12 @@ class ProductMsg extends Model
 	//关联商品一级分类表
     public function cate()
 	{
-		return $this->belongsTo('Cate','Cate_id','id')->bind('Cate_name'); 
+		return $this->belongsTo('Cate','Cate_id','Cate_id')->bind('Cate_name'); 
 	}
 	//关联商品二级分类表
     public function sort()
 	{
-		return $this->belongsTo('Sort','Sort_id','id')->bind('Sort_name'); 
+		return $this->belongsTo('Sort','Sort_id','Sort_id')->bind('Sort_name'); 
 	}
 }
 ?>

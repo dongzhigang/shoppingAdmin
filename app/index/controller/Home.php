@@ -38,9 +38,9 @@ class Home extends Controller
 		$list = $ProductMsg -> cate() ->select();
 		if($ProductMsg){
 			foreach ($list as $key => $value) {
-				$res = $ProductMsg ->where('Cate_id',$value->id) ->limit(10)->select();
+				$res = $ProductMsg ->where('Cate_id',$value->Cate_id) ->limit(10)->select();
 				if($res){
-					$arrayName = Array('name' => $value->Cate_name,'id' => $value->id ,'list' => $res);
+					$arrayName = Array('name' => $value->Cate_name,'Cate_id' => $value->Cate_id ,'list' => $res);
 					$array[$key] = $arrayName;
 				}
 			}
