@@ -11,7 +11,7 @@
  Target Server Version : 50547
  File Encoding         : 65001
 
- Date: 10/09/2018 18:13:46
+ Date: 11/09/2018 20:03:06
 */
 
 SET NAMES utf8mb4;
@@ -43,10 +43,19 @@ INSERT INTO `advertis` VALUES (2, '开始', '离开国际化的', 'public/images
 -- ----------------------------
 DROP TABLE IF EXISTS `antistop`;
 CREATE TABLE `antistop`  (
-  `id` int(10) NOT NULL COMMENT '关键词 自增id',
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '关键词 自增id',
   `keyword` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '关键词',
+  `isHot` int(1) NULL DEFAULT NULL COMMENT '是否推荐，0不推荐，1推荐',
+  `isDefault` int(1) NULL DEFAULT NULL COMMENT '是否默认，0不默认，1默认',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '关键词表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '关键词表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of antistop
+-- ----------------------------
+INSERT INTO `antistop` VALUES (1, '墨镜', 1, 1);
+INSERT INTO `antistop` VALUES (2, '520元大礼包', 1, 0);
+INSERT INTO `antistop` VALUES (3, '女装', 1, 0);
 
 -- ----------------------------
 -- Table structure for brand
@@ -86,6 +95,43 @@ CREATE TABLE `cate`  (
 -- ----------------------------
 INSERT INTO `cate` VALUES (1, '1001000', '居家', 'public/images/icon/44ad9a739380aa6b7cf956fb2a06e7a7.png', 'public/images/classify/7c918f37de108f3687d69b39daab34eb.png', '舒适亲肤');
 INSERT INTO `cate` VALUES (2, '1002000', '服装', 'public/images/icon/243e5bf327a87217ad1f54592f0176ec.png', 'public/images/classify/7c918f37de108f3687d69b39daab34eb.png', '贴身的，要亲肤');
+
+-- ----------------------------
+-- Table structure for comment
+-- ----------------------------
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment`  (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'id自增',
+  `content` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '评论内容',
+  `add_date` date NULL DEFAULT NULL COMMENT '评论时间',
+  `user_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户id',
+  `product_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '商品id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of comment
+-- ----------------------------
+INSERT INTO `comment` VALUES (1, '更加的了解更多了解', '2018-12-01', '1', '1');
+INSERT INTO `comment` VALUES (2, '更加的了解更多了解更加的了解更多了解', '2015-05-01', '2', '1');
+
+-- ----------------------------
+-- Table structure for comment_img
+-- ----------------------------
+DROP TABLE IF EXISTS `comment_img`;
+CREATE TABLE `comment_img`  (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '评论id',
+  `pathUrl` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '评论图片',
+  `add_date` date NULL DEFAULT NULL COMMENT '添加时间',
+  `comment_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '评论id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '评论图片' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of comment_img
+-- ----------------------------
+INSERT INTO `comment_img` VALUES (1, 'public/images/comment/a8b0a5def7d64e411dd98bdfb1fc989b.png', '2014-12-11', '1');
+INSERT INTO `comment_img` VALUES (2, 'public/images/comment/a8b0a5def7d64e411dd98bdfb1fc989b.png', '2015-12-12', '1');
 
 -- ----------------------------
 -- Table structure for contents
@@ -175,7 +221,7 @@ CREATE TABLE `product_msg`  (
   `parameter_id` int(10) NULL DEFAULT NULL COMMENT '商品参数id',
   `time` datetime NULL DEFAULT NULL COMMENT '上架时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '产品信息表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '产品信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of product_msg
@@ -184,6 +230,7 @@ INSERT INTO `product_msg` VALUES (1, '1', '苹果', '2001', '苹果苹果', 'pub
 INSERT INTO `product_msg` VALUES (2, '2', '手机', '2002', '手机手机手机手机', 'public/images/thumbnail/a8b0a5def7d64e411dd98bdfb1fc989b.png', 62.00, 120.00, 1, 0, 1, '1', '1001000', '1001001', 1, 1, '2019-11-05 00:00:00');
 INSERT INTO `product_msg` VALUES (3, '3', '女装', '2003', '女装女装', 'public/images/thumbnail/a8b0a5def7d64e411dd98bdfb1fc989b.png', 78.00, 46.00, 1, 1, 1, '2', '1001000', '1001002', 2, 2, '2018-09-13 12:15:18');
 INSERT INTO `product_msg` VALUES (4, '4', '宠物', '2001', '宠物宠物', 'public/images/thumbnail/5b8cf75d2583d.jpg', 104.00, 100.00, 1, 0, 1, '3', '1002000', '1002001', 3, 3, '2019-12-05 00:00:00');
+INSERT INTO `product_msg` VALUES (5, '5', '苹果2', '20055', '苹果苹果333333', 'public/images/thumbnail/a8b0a5def7d64e411dd98bdfb1fc989b.png', 210.00, 185.00, 1, 1, 1, '1', '1001000', '1001002', 3, 3, '2017-12-02 00:00:00');
 
 -- ----------------------------
 -- Table structure for product_sku
@@ -238,5 +285,29 @@ CREATE TABLE `sort`  (
 INSERT INTO `sort` VALUES (1, '1001001', '单肩包', NULL, 'public/images/classify/7c918f37de108f3687d69b39daab34eb.png', '单肩包单肩包', '1001000');
 INSERT INTO `sort` VALUES (2, '1001002', '杯壶', NULL, 'public/images/classify/7c918f37de108f3687d69b39daab34eb.png', '杯壶杯壶', '1001000');
 INSERT INTO `sort` VALUES (3, '1002001', '宠物', NULL, 'public/images/classify/7c918f37de108f3687d69b39daab34eb.png', '宠物宠物', '1002000');
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user`  (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '自增',
+  `user_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户id',
+  `userName` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户名',
+  `password` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户密码',
+  `imgUrl` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户头像',
+  `phone` varchar(11) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '手机号码',
+  `sex` int(1) NULL DEFAULT NULL COMMENT '性别。0是女，1是男',
+  `date_of_birth` date NULL DEFAULT NULL COMMENT '出生日期',
+  `grade` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户等级',
+  `state` int(1) NULL DEFAULT NULL COMMENT '用户状态，0不可用，1可用，2注销',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES (1, '1', 'admin', '123456', 'public/images/user/5b8cf75d2583d.jpg', '10086', 1, '2017-12-10', '普通', 1);
+INSERT INTO `user` VALUES (2, '2', '123', '123', 'public/images/user/5b8cf75d2583d.jpg', '10086', 0, '2015-10-02', '普通', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -41,5 +41,10 @@ class ProductMsg extends Model
 	{
 		return $this->belongsTo('Sort','Sort_id','Sort_id')->bind('Sort_name'); 
 	}
+	//关联评论表
+    public function comment()
+	{
+		return $this->hasMany('Comment','product_id','product_id')->bind('content'); 
+	}
 }
 ?>

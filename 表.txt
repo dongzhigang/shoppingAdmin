@@ -25,3 +25,7 @@
 品牌表(brand)：id(品牌自增)、品牌名称(brand_name)、品牌介绍(recommend)、品牌图片(img)、最低价格(bot_price)、
 
 常见问题表(generalIssue)：id(自增)、问题(question)、回答(answer)
+
+评论表(comment)：id(自增)、内容(content)、评论时间(add_date)、用户id(user_id)、商品id(product_id)、
+评论图片(comment_img)：id(评论id)、评论图片(imgUrl)、添加时间(add_date)、
+用户表(user)、id(自增)、用户id(user_id)、用户名(userName)、用户密码(password)、用户头像(imgUrl)、手机号码(phone)、性别(sex)、出生日期(date_of_birth)、用户等级(grade)、用户状态(state)、

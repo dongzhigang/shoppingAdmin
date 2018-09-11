@@ -9,83 +9,96 @@ use app\index\Model\Sort;						//常见问题
  */
 class Product extends Controller
 {
-	// 商品详情接口
-	public function getProductInfo()
-	{
-		$id = $_REQUEST['id'];
-		$ProductMsg = new ProductMsg();
-		$GeneralIssue = new GeneralIssue();
-		$productInfo = $ProductMsg ->where('product_id',$id)->with('Brand')->find();					//商品信息
-		$master = $ProductMsg -> productMaster() -> where('product_id',$id) -> select();				//商品主图
-		$property = $ProductMsg ->property() ->  where('product_id',$id) -> select();					//商品规格
-		$parameter = $ProductMsg ->parameter() ->  where('product_id',$id) -> select();					//商品常见问题
-		$answer = $GeneralIssue  -> select();					//商品常见问题
-		// 查询结果
-		$data = array(
-			'productInfo' => $productInfo,
-			'master' 	  => $master,
-			'property'    => $property,
-			'parameter'	  => $parameter,
-			'answer'	  => $answer,
-		);
-		if($productInfo && $answer){
-			$arrayName = array('code' => 0,'data' => $data ,'msg' => "加载成功" );
-		}else{
-			$arrayName = array('code' => -1,'data' => array('') ,'msg' => "加载失败" );
-		}
-		return json($arrayName);
-	}
-
 	//查询商品列表
 	public function productList()
 	{
 		$ProductMsg = new ProductMsg();
-		// 通过一级分类查找商品
-		// if(isset($_REQUEST['cateId'])){
-		// 	$id = $_REQUEST['cateId'];						//一级分类id	
-		// 	$productList = $ProductMsg ->where(['Cate_id'=>$id]) ->select();
-		// }
-		$where = ['sell'=>1];
+		$where = ['sell'=>1];							//条件
 		$page = $_REQUEST['page'];
 		$rows = $_REQUEST['rows'];
+		$fieldSortList = Array();
 		if(isset($_REQUEST['id'])){
 			// 通过二级分类查找商品,请求参数子分类id
 			$where = ['Sort_id'=>$_REQUEST['id'],'sell'=>1];
 			$productList = $ProductMsg ->where($where) ->page($page,$rows) ->select();
 		}
-		if(isset($_REQUEST['new_product'])){
+		//新品
+		else if(isset($_REQUEST['new_product'])){
 			//通过新品查找商品，请求参数new_product
 			$where = ['new_product'=>$_REQUEST['new_product'],'sell'=>1];
 			$productList = $ProductMsg ->where($where) ->page($page,$rows) ->select();
+			if(isset($_REQUEST['order'])){
+				//价格at_price排序，请求参数order,asc上升，desc下降
+				$where = ['sell'=>1,'new_product'=>$_REQUEST['new_product']];
+				$productList = $ProductMsg ->where($where)-> order('at_price '.$_REQUEST['order']) ->page($page,$rows) ->select();
+			}
+			if(isset($_REQUEST['Sort_id'])){
+				//子分类价格at_price排序，请求参数order,asc上升，desc下降
+				$where = ['Sort_id'=>$_REQUEST['Sort_id'],'sell'=>1,'new_product'=>$_REQUEST['new_product']];
+				$productList = $ProductMsg ->where($where)->page($page,$rows)-> select();
+			}
+			if( isset($_REQUEST['Sort_id']) && isset($_REQUEST['order']) ){
+				//子分类价格at_price排序，请求参数order,asc上升，desc下降
+				$where = ['Sort_id'=>$_REQUEST['Sort_id'],'new_product'=> $_REQUEST['new_product'],'sell'=>1];
+				$productList = $ProductMsg ->where($where)-> order('at_price '.$_REQUEST['order'])->page($page,$rows)->select();
+			}
 			//查找全部商品的子分类，请求参数无
-			$res = $ProductMsg ->where($where)->field('Sort_id')->group('Sort_id')->buildSql();
-			$fieldSortList = $ProductMsg->sort()->alias('a')->join([$res =>'b'],'a.Sort_id = b.Sort_id')->select();
-		}else{
-			//查找全部商品的子分类，请求参数无
-			$res = $ProductMsg ->where(['sell'=>1])->field('Sort_id')->group('Sort_id')->buildSql();
+			$res = $ProductMsg ->where(['new_product'=>$_REQUEST['new_product'],'sell'=>1])->field('Sort_id')->group('Sort_id')->buildSql();
 			$fieldSortList = $ProductMsg->sort()->alias('a')->join([$res =>'b'],'a.Sort_id = b.Sort_id')->select();
 		}
-		if(isset($_REQUEST['hot_sale'])){
+		
+		//热卖
+		else if(isset($_REQUEST['hot_sale'])){
 			//通过热卖查找商品，请求参数hot_sale
 			$where = ['hot_sale'=>$_REQUEST['hot_sale'],'sell'=>1];
 			$productList = $ProductMsg ->where($where) ->page($page,$rows) ->select();
+			if(isset($_REQUEST['order'])){
+				//价格at_price排序，请求参数order,asc上升，desc下降
+				$where = ['hot_sale'=>$_REQUEST['hot_sale'],'sell'=>1];
+				$productList = $ProductMsg ->where($where)-> order('at_price '.$_REQUEST['order']) ->page($page,$rows) ->select();
+			}
+			if(isset($_REQUEST['Sort_id'])){
+				//子分类价格at_price排序，请求参数order,asc上升，desc下降
+				$where = ['Sort_id'=>$_REQUEST['Sort_id'],'hot_sale'=>$_REQUEST['hot_sale'],'sell'=>1];
+				$productList = $ProductMsg ->where($where)->page($page,$rows)-> select();
+			}
+			if( isset($_REQUEST['Sort_id']) && isset($_REQUEST['order'])){
+				//子分类价格at_price排序，请求参数order,asc上升，desc下降
+				$where = ['Sort_id'=>$_REQUEST['Sort_id'],'hot_sale'=> $_REQUEST['hot_sale'],'sell'=>1];
+				$productList = $ProductMsg ->where($where)-> order('at_price '.$_REQUEST['order'])->page($page,$rows)->select();
+			}
+			//查找全部商品的子分类，请求参数无
+			$res = $ProductMsg ->where(['hot_sale'=>$_REQUEST['hot_sale'],'sell'=>1])->field('Sort_id')->group('Sort_id')->buildSql();
+			$fieldSortList = $ProductMsg->sort()->alias('a')->join([$res =>'b'],'a.Sort_id = b.Sort_id')->select();
 		}
-		if(isset($_REQUEST['order']) && isset($_REQUEST['new_product'])){
-			//价格at_price排序，请求参数order,asc上升，desc下降
-			$productList = $ProductMsg ->where($where)-> order('at_price '.$_REQUEST['order']) ->page($page,$rows) ->select();
+		
+		//模糊查询
+		else if(isset($_REQUEST['keyword'])){
+			$productList = $ProductMsg ->where($where)->where('name|docs','like',$_REQUEST['keyword'].'%')->page($page,$rows)->select();			
+			if(isset($_REQUEST['order'])){
+				//价格at_price排序，请求参数order,asc上升，desc下降
+				$productList = $ProductMsg ->where($where)-> order('at_price '.$_REQUEST['order'])->where('name|docs','like',$_REQUEST['keyword'].'%')->page($page,$rows)->select();
+			}
+			if(isset($_REQUEST['Sort_id'])){
+				//子分类价格at_price排序，请求参数order,asc上升，desc下降
+				$where = ['Sort_id'=>$_REQUEST['Sort_id'],'sell'=>1];
+				$productList = $ProductMsg ->where($where)->where('name|docs','like',$_REQUEST['keyword'].'%')->page($page,$rows)->select();
+			}
+			if( isset($_REQUEST['Sort_id']) && isset($_REQUEST['order']) ){
+				//子分类价格at_price排序，请求参数order,asc上升，desc下降
+				$where = ['Sort_id'=>$_REQUEST['Sort_id'],'sell'=>1];
+				$productList = $ProductMsg ->where($where)-> order('at_price '.$_REQUEST['order'])->where('name|docs','like',$_REQUEST['keyword'].'%')->page($page,$rows)->select();
+			}
+			//查找全部商品的子分类，请求参数无
+			$res = $ProductMsg ->where(['sell'=>1])->where('name|docs','like',$_REQUEST['keyword'].'%')->field('Sort_id')->group('Sort_id')->buildSql();
+			$fieldSortList = $ProductMsg->sort()->alias('a')->join([$res =>'b'],'a.Sort_id = b.Sort_id')->select();
 		}
-		if(isset($_REQUEST['id']) && isset($_REQUEST['new_product'])){
-			//子分类价格at_price排序，请求参数order,asc上升，desc下降
-			$where = ['Sort_id'=>$_REQUEST['id'],'sell'=>1];
-			$productList = $ProductMsg ->where($where)->page($page,$rows)-> select();
-		}
-		if( isset($_REQUEST['id']) && isset($_REQUEST['order']) && isset($_REQUEST['new_product']) ){
-			//子分类价格at_price排序，请求参数order,asc上升，desc下降
-			$where = ['Sort_id'=>$_REQUEST['id'],'new_product'=> $_REQUEST['new_product'],'sell'=>1];
-			$productList = $ProductMsg ->where($where)-> order('at_price '.$_REQUEST['order'])->page($page,$rows)->select();
-		}
-		if( isset($_REQUEST['id']) && isset($_REQUEST['order']) && isset($_REQUEST['new_product']) && isset($_REQUEST['hot_sale']) ){
+		//全部商品
+		else {
 			$productList = $ProductMsg ->where($where) ->page($page,$rows)->select();
+			//查找全部商品的子分类，请求参数无
+			$res = $ProductMsg ->where(['sell'=>1])->field('Sort_id')->group('Sort_id')->buildSql();
+			$fieldSortList = $ProductMsg->sort()->alias('a')->join([$res =>'b'],'a.Sort_id = b.Sort_id')->select();
 		}
 		//查询有多少条记录
 		$count = $ProductMsg ->count();
@@ -128,6 +141,49 @@ class Product extends Controller
 			$arrayName = array('code' => 0,'data' => $data ,'msg' => "加载成功" );
 		}else{
 			$arrayName = array('code' => 0,'data' => Array() ,'msg' => "加载失败" );
+		}
+		return json($arrayName);
+	}
+	// 商品详情接口
+	public function getProductInfo()
+	{
+		$id = $_REQUEST['product_id'];
+		$ProductMsg = new ProductMsg();
+		$GeneralIssue = new GeneralIssue();
+		$productInfo = $ProductMsg ->where('product_id',$id)->with('Brand')->find();					//商品信息
+		$master = $ProductMsg -> productMaster() -> where('product_id',$id) -> select();				//商品主图
+		$property = $ProductMsg ->property() ->  where('product_id',$id) -> select();					//商品规格
+		$parameter = $ProductMsg ->parameter() ->  where('product_id',$id) -> select();					//商品参数表
+		$answer = $GeneralIssue  -> select();															//商品常见问题
+		$comment = $ProductMsg  -> comment()->where('product_id',$id)->with('user')-> find();			//商品评论
+		$img = $ProductMsg->comment()->where('product_id',$id)->find()->commentImg()->where('comment_id',$comment->id)-> select();//商品评论图片
+		$commentlist = Array('list'=>$comment,'img'=>$img);
+		// 查询结果
+		$data = array(
+			'productInfo' 	=> 	$productInfo,
+			'master' 	  	=> 	$master,
+			'property'    	=> 	$property,
+			'parameter'	  	=> 	$parameter,
+			'answer'	  	=> 	$answer,
+			'commentlist'	=>	$commentlist
+		);
+		if($ProductMsg && $GeneralIssue){
+			$arrayName = array('code' => 0,'data' => $data ,'msg' => "加载成功" );
+		}else{
+			$arrayName = array('code' => -1,'data' => array('') ,'msg' => "加载失败" );
+		}
+		return json($arrayName);
+	}
+	//商品总数接口
+	public function productCount()
+	{
+		//查询有多少条记录
+		$ProductMsg = new ProductMsg();
+		$count = $ProductMsg ->count();
+		if($ProductMsg){
+			$arrayName = array('code' => 0,'data' => $count ,'msg' => "加载成功" );
+		}else{
+			$arrayName = array('code' => -1,'data' => array('') ,'msg' => "加载失败" );
 		}
 		return json($arrayName);
 	}
