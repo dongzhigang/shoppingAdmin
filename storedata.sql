@@ -11,7 +11,7 @@
  Target Server Version : 50547
  File Encoding         : 65001
 
- Date: 12/09/2018 18:34:50
+ Date: 12/09/2018 18:35:57
 */
 
 SET NAMES utf8mb4;
@@ -106,15 +106,14 @@ CREATE TABLE `comment`  (
   `add_date` date NULL DEFAULT NULL COMMENT '评论时间',
   `user_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户id',
   `product_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '商品id',
-  `stats` int(1) NULL DEFAULT NULL COMMENT '是否有图片，0没有，1有',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES (1, '更加的了解更多了解', '2018-12-01', '1', '1', 1);
-INSERT INTO `comment` VALUES (2, '更加的了解更多了解更加的了解更多了解', '2015-05-01', '2', '1', 0);
+INSERT INTO `comment` VALUES (1, '更加的了解更多了解', '2018-12-01', '1', '1');
+INSERT INTO `comment` VALUES (2, '更加的了解更多了解更加的了解更多了解', '2015-05-01', '2', '1');
 
 -- ----------------------------
 -- Table structure for comment_img
