@@ -44,7 +44,7 @@ class ProductMsg extends Model
 	//关联评论表
     public function comment()
 	{
-		return $this->hasMany('Comment','product_id','product_id')->bind('content'); 
+		return $this->belongsTo('Comment','product_id','product_id')->bind('content'); 
 	}
 }
 ?>

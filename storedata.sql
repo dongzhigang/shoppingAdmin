@@ -11,7 +11,7 @@
  Target Server Version : 50547
  File Encoding         : 65001
 
- Date: 11/09/2018 20:03:06
+ Date: 12/09/2018 18:34:50
 */
 
 SET NAMES utf8mb4;
@@ -106,14 +106,15 @@ CREATE TABLE `comment`  (
   `add_date` date NULL DEFAULT NULL COMMENT '评论时间',
   `user_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户id',
   `product_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '商品id',
+  `stats` int(1) NULL DEFAULT NULL COMMENT '是否有图片，0没有，1有',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES (1, '更加的了解更多了解', '2018-12-01', '1', '1');
-INSERT INTO `comment` VALUES (2, '更加的了解更多了解更加的了解更多了解', '2015-05-01', '2', '1');
+INSERT INTO `comment` VALUES (1, '更加的了解更多了解', '2018-12-01', '1', '1', 1);
+INSERT INTO `comment` VALUES (2, '更加的了解更多了解更加的了解更多了解', '2015-05-01', '2', '1', 0);
 
 -- ----------------------------
 -- Table structure for comment_img
@@ -131,7 +132,7 @@ CREATE TABLE `comment_img`  (
 -- Records of comment_img
 -- ----------------------------
 INSERT INTO `comment_img` VALUES (1, 'public/images/comment/a8b0a5def7d64e411dd98bdfb1fc989b.png', '2014-12-11', '1');
-INSERT INTO `comment_img` VALUES (2, 'public/images/comment/a8b0a5def7d64e411dd98bdfb1fc989b.png', '2015-12-12', '1');
+INSERT INTO `comment_img` VALUES (2, 'public/images/comment/a8b0a5def7d64e411dd98bdfb1fc989b.png', '2015-12-12', '2');
 
 -- ----------------------------
 -- Table structure for contents
@@ -160,6 +161,26 @@ CREATE TABLE `general_issue`  (
 -- ----------------------------
 INSERT INTO `general_issue` VALUES (1, '购买运费如何收取？', '单笔订单金额（不含运费）满88元免邮费；不满88元，每单收取10元运费。');
 INSERT INTO `general_issue` VALUES (2, '使用什么快递发货？', '严选默认使用顺丰快递发货（个别商品使用其他快递），配送范围覆盖全国大部分地区');
+
+-- ----------------------------
+-- Table structure for goods_car
+-- ----------------------------
+DROP TABLE IF EXISTS `goods_car`;
+CREATE TABLE `goods_car`  (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `product_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '商品id',
+  `user_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户id',
+  `num` int(10) NULL DEFAULT NULL COMMENT '数量',
+  `time_create` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `time_update` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = gbk COLLATE = gbk_chinese_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of goods_car
+-- ----------------------------
+INSERT INTO `goods_car` VALUES (1, '1', '1', 2, '2014-02-15 00:00:00', '2018-09-12 14:11:08');
+INSERT INTO `goods_car` VALUES (2, '2', '1', 2, '2018-09-12 14:11:05', '2018-09-12 14:11:10');
 
 -- ----------------------------
 -- Table structure for parameter
@@ -227,9 +248,9 @@ CREATE TABLE `product_msg`  (
 -- Records of product_msg
 -- ----------------------------
 INSERT INTO `product_msg` VALUES (1, '1', '苹果', '2001', '苹果苹果', 'public/images/thumbnail/5b8cf75d2583d.jpg', 25.00, 16.00, 1, 1, 1, '1', '1001000', '1001001', 1, 1, '2018-12-10 00:00:00');
-INSERT INTO `product_msg` VALUES (2, '2', '手机', '2002', '手机手机手机手机', 'public/images/thumbnail/a8b0a5def7d64e411dd98bdfb1fc989b.png', 62.00, 120.00, 1, 0, 1, '1', '1001000', '1001001', 1, 1, '2019-11-05 00:00:00');
+INSERT INTO `product_msg` VALUES (2, '2', '手机', '2002', '手机手机手机手机', 'public/images/thumbnail/a8b0a5def7d64e411dd98bdfb1fc989b.png', 62.00, 120.00, 1, 1, 1, '1', '1001000', '1001001', 1, 1, '2019-11-05 00:00:00');
 INSERT INTO `product_msg` VALUES (3, '3', '女装', '2003', '女装女装', 'public/images/thumbnail/a8b0a5def7d64e411dd98bdfb1fc989b.png', 78.00, 46.00, 1, 1, 1, '2', '1001000', '1001002', 2, 2, '2018-09-13 12:15:18');
-INSERT INTO `product_msg` VALUES (4, '4', '宠物', '2001', '宠物宠物', 'public/images/thumbnail/5b8cf75d2583d.jpg', 104.00, 100.00, 1, 0, 1, '3', '1002000', '1002001', 3, 3, '2019-12-05 00:00:00');
+INSERT INTO `product_msg` VALUES (4, '4', '宠物', '2001', '宠物宠物', 'public/images/thumbnail/5b8cf75d2583d.jpg', 104.00, 100.00, 1, 1, 1, '3', '1002000', '1002001', 3, 3, '2019-12-05 00:00:00');
 INSERT INTO `product_msg` VALUES (5, '5', '苹果2', '20055', '苹果苹果333333', 'public/images/thumbnail/a8b0a5def7d64e411dd98bdfb1fc989b.png', 210.00, 185.00, 1, 1, 1, '1', '1001000', '1001002', 3, 3, '2017-12-02 00:00:00');
 
 -- ----------------------------

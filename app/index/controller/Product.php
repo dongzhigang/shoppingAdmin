@@ -3,7 +3,7 @@ namespace app\index\Controller;
 use think\Controller;
 use app\index\Model\ProductMsg;							//商品信息
 use app\index\Model\GeneralIssue;						//常见问题
-use app\index\Model\Sort;						//常见问题
+use app\index\Model\Sort;								//常见问题
 /**
  * 商品接口
  */
@@ -123,10 +123,13 @@ class Product extends Controller
 		$cateFind = $ProductMsg -> cate() ->where('Cate_id',$id)->find();	  //一级的分类数据
 		//判断传入值是否分类id，则是子分类id
 		if(!$cateFind){
-			$Cate_id =  $ProductMsg -> sort() ->where('Sort_id',$id)->find()->Cate_id;		//二级分类数据
+			// $cateFind = $ProductMsg -> cate() ->with('sort') ->where('Sort_id',$id)->select();
+			// dump($cateFind);
+			// exit;
+			$Cate_id =  $ProductMsg -> sort() ->where('Sort_id',$id)->find()->Cate_id;		//分类id
 			$cateFind = $ProductMsg -> cate() ->where('Cate_id',$Cate_id)->find();	 		//一级的分类数据
-			$sortFind = $ProductMsg -> sort() ->where('Sort_id',$id)->find();				//二级分类数据
-			$sortList = $ProductMsg -> sort() ->where('Cate_id',$Cate_id)->select();	
+			$sortFind = $ProductMsg -> sort() ->where('Sort_id',$id)->find();				//二级分类默认数据
+			$sortList = $ProductMsg -> sort() ->where('Cate_id',$Cate_id)->select();		//二级分类数据
 		}else{
 			$sortFind = $ProductMsg -> sort() ->where('Cate_id',$id)->find();			//二级分类数据
 			$sortList = $ProductMsg -> sort() ->where('Cate_id',$id)->select();			//二级分类列表
@@ -155,9 +158,7 @@ class Product extends Controller
 		$property = $ProductMsg ->property() ->  where('product_id',$id) -> select();					//商品规格
 		$parameter = $ProductMsg ->parameter() ->  where('product_id',$id) -> select();					//商品参数表
 		$answer = $GeneralIssue  -> select();															//商品常见问题
-		$comment = $ProductMsg  -> comment()->where('product_id',$id)->with('user')-> find();			//商品评论
-		$img = $ProductMsg->comment()->where('product_id',$id)->find()->commentImg()->where('comment_id',$comment->id)-> select();//商品评论图片
-		$commentlist = Array('list'=>$comment,'img'=>$img);
+		$commentlist = $ProductMsg  -> comment()->where('product_id',$id)->with('commentImg,user')-> find();			//商品评论
 		// 查询结果
 		$data = array(
 			'productInfo' 	=> 	$productInfo,

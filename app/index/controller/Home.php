@@ -3,6 +3,7 @@ namespace app\index\Controller;
 use think\Controller;
 use app\index\Model\Advertis;
 use app\index\Model\ProductMsg;
+use app\index\Model\Cate;
 /**
  * 首页接口
  */
@@ -23,30 +24,25 @@ class Home extends Controller
 	//一级分类列表
 	public function cateList() 
 	{
-		$ProductMsg = new ProductMsg;	
-		$list = $ProductMsg -> cate() ->select();
+		$Cate = new Cate;	
+		$list = $Cate ->select();
 		if($list){
 			return $list;
 		}else{
-			return flase;
+			return false;
 		}								
 	}
 	//分类商品列表
 	public function productList()
 	{
-		$ProductMsg = new ProductMsg;
-		$list = $ProductMsg -> cate() ->select();
-		if($ProductMsg){
-			foreach ($list as $key => $value) {
-				$res = $ProductMsg ->where('Cate_id',$value->Cate_id) ->limit(10)->select();
-				if($res){
-					$arrayName = Array('name' => $value->Cate_name,'Cate_id' => $value->Cate_id ,'list' => $res);
-					$array[$key] = $arrayName;
-				}
-			}
-			return $array;
+		$Cate = new Cate;
+		$list = $Cate ->with('productMsg') ->select();
+		// return json($list);
+		// exit;
+		if($Cate){
+			return $list;
 		}else{
-			return flase;
+			return false;
 		}	
 	}
 	//品牌列表
@@ -57,7 +53,7 @@ class Home extends Controller
 		if($ProductMsg){
 			return $list;
 		}else{
-			return flase;
+			return false;
 		}
 	}
 	//新品列表
@@ -68,7 +64,7 @@ class Home extends Controller
 		if($ProductMsg){
 			return $list;
 		}else{
-			return flase;
+			return false;
 		}
 	}
 	//人气热卖列表
@@ -79,7 +75,7 @@ class Home extends Controller
 		if($ProductMsg){
 			return $list;
 		}else{
-			return flase;
+			return false;
 		}	
 	}
 
@@ -107,10 +103,10 @@ class Home extends Controller
 			'newProduct' 		=> $newProduct,
 			'hotSale' 			=> $hotSale,
 		);
-		if ($Advertis && $cateList && $productList && $newProduct && $hotSale ) {
-			$arrayName = array('code' => 0,'data' => $data ,'msg' => "加载成功" );
-		}else{
+		if ($Advertis===false || $cateList===false || $productList===false || $newProduct===false || $hotSale===false ) {
 			$arrayName = array('code' => -1,'data' => array() ,'msg' => "加载失败" );
+		}else{
+			$arrayName = array('code' => 0,'data' => $data ,'msg' => "加载成功" );
 		}
 		return json($arrayName);	
 	}

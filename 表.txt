@@ -29,3 +29,4 @@
 评论表(comment)：id(自增)、内容(content)、评论时间(add_date)、用户id(user_id)、商品id(product_id)、
 评论图片(comment_img)：id(评论id)、评论图片(imgUrl)、添加时间(add_date)、
 用户表(user)、id(自增)、用户id(user_id)、用户名(userName)、用户密码(password)、用户头像(imgUrl)、手机号码(phone)、性别(sex)、出生日期(date_of_birth)、用户等级(grade)、用户状态(state)、
+购物车表(goods_shopcar)：id(自增)、数量(num)、创建时间(create_time)、更新时间(update_time)、商品id(product_id)、用户id()user_id

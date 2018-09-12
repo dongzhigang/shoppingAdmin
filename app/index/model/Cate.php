@@ -19,7 +19,12 @@ class Cate extends Model
 	//关联二级分类表
     public function sort()
 	{
-		return $this->belongsTo('Sort','Cate_id','id')->bind('Sort_name,id'); 				//('关联模型名','外键名','主键名',['模型别名定义'])
+		return $this->hasMany('Sort','Cate_id','Cate_id'); 				//('关联模型名','外键名','主键名',['模型别名定义'])
+	}
+	//关联商品一级分类表
+    public function productMsg()
+	{
+		return $this->hasMany('ProductMsg','Cate_id','Cate_id'); 
 	}
 }
 ?>

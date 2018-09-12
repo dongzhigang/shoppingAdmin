@@ -9,12 +9,12 @@ class Comment extends Model
 	//关联评论图片表
     public function commentImg()
 	{
-		return $this->belongsTo('CommentImg','comment_id','id')->bind('pathUrl'); 
+		return $this->hasMany('CommentImg','comment_id','id'); 
 	}
 	//关联用户表
     public function user()
 	{
-		return $this->belongsTo('User','user_id','user_id')->bind('imgUrl,userName'); 
+		return $this->belongsTo('User','user_id','user_id'); 
 	}
 }
 ?>
