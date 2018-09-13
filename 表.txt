@@ -28,5 +28,13 @@
 
 评论表(comment)：id(自增)、内容(content)、评论时间(add_date)、用户id(user_id)、商品id(product_id)、
 评论图片(comment_img)：id(评论id)、评论图片(imgUrl)、添加时间(add_date)、
+
 用户表(user)、id(自增)、用户id(user_id)、用户名(userName)、用户密码(password)、用户头像(imgUrl)、手机号码(phone)、性别(sex)、出生日期(date_of_birth)、用户等级(grade)、用户状态(state)、
-购物车表(goods_shopcar)：id(自增)、数量(num)、创建时间(create_time)、更新时间(update_time)、商品id(product_id)、用户id()user_id
+
+购物车表(goods_shopcar)：id(自增)、数量(num)、创建时间(create_time)、更新时间(update_time)、商品id(product_id)、用户id(user_id)、属性id(property_id)
+
+订单表(order)：订单编号(order_number)、订单id(order_id)、支付类型(payment)、邮费(post_fee)、status(订单状态)，创建时间(create_time)、更新时间(update_time)、付款时间(payment_time)、发货时间(consign_time)、物流名称(shipping_name)、物流单号(shipping_code)、用户id(user_id)、买家留言(buyer_message)、买家昵称(buyer_nick)、评价(buyer_raqte)、
+订单商品表(order_item)：商品id(product_id)、订单id(order_id)、商品购物数量(num)、商品标题(title)、商品单价(price)、商品总金额(total_fee)、商品图片地址(pic_path)、
+物流表(order_shipping)：订单id(order_id)、收货人全名(receiver_name)、固定电话(receiver_phone)、移动电话(receiver_mobile)、省份(receiver_state)、城市(receiver_city)、区/县(receiver_district)、收获地址(receiver_address)、邮政编码(receiver_code)、地址id(address_id)
+
+地址表(address)：地址id(address_id)、用户id(user_id)、收货人全名(receiver_name)、固定电话(receiver_phone)、移动电话(receiver_mobile)、省份(receiver_state)、城市(receiver_city)、区/县(receiver_district)、收获地址(receiver_address)、邮政编码(receiver_code)、是否默认(default)

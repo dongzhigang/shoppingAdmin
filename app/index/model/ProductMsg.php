@@ -24,12 +24,12 @@ class ProductMsg extends Model
 	//关联属性表
     public function property()
 	{
-		return $this->belongsTo('Property','product_id','product_id')->bind('brand_name'); 
+		return $this->belongsTo('Property','product_id','product_id')->bind('value'); 
 	}
 	//关联商品参数表
     public function parameter()
 	{
-		return $this->belongsTo('Parameter','product_id','product_id')->bind('brand_name'); 
+		return $this->belongsTo('Parameter','product_id','product_id')->bind('value'); 
 	}
 	//关联商品一级分类表
     public function cate()
