@@ -2,6 +2,7 @@
 namespace app\index\Controller;
 use think\Controller;
 use app\index\Model\GoodsCar;
+use app\index\Model\Address;
 /**
  * 购物车接口
  */
@@ -50,8 +51,7 @@ class Shopcar extends Controller
 		}else{
 			$arrayName = array('code' =>-1 ,'data'=>Array(),'msg'=>'添加失败' );
 		}
-		return json($arrayName);	
-
+		return json($arrayName);
 	}
 	// 更新购物车,参数是购物车id、数量num
 	public function updateCar()
@@ -64,10 +64,10 @@ class Shopcar extends Controller
 			$array = Array('num' => $arrNum[$key],'time_update'	=>	date('Y-m-d H:i:s'));
 			$list = $GoodsCar -> save($array,['cart_id'=>$id]);
 		}
-		if($list){
-			$arrayName = array('code' =>0 ,'data'=>$list,'msg'=>'更新成功' );
-		}else{
+		if($list === false){
 			$arrayName = array('code' =>-1 ,'data'=>Array(),'msg'=>'更新失败' );
+		}else{
+			$arrayName = array('code' =>0 ,'data'=>$list,'msg'=>'更新成功' );
 		}
 		return json($arrayName);		
 	}
@@ -96,6 +96,34 @@ class Shopcar extends Controller
 		$count = $GoodsCar->where('user_id',$id) ->count();
 		if($GoodsCar){
 			$arrayName = Array('code'=>0,'data'=>$count,'msg'=>'加载成功');
+		}else{
+			$arrayName = Array('code'=>0,'data'=>Array(),'msg'=>'加载失败');
+		}
+		return json($arrayName);
+	}
+
+	//下单之前信息确认,请求参数，user_id,product_id,addressId
+	public function cartCheckout(){
+		$user_id = $_REQUEST['user_id'];
+		$product_id = $_REQUEST['product_id'];
+		$Address = new Address;
+		$GoodsCar = new GoodsCar;
+		//判断是否有地址id，没有就用默认地址
+		if(isset($_REQUEST['addressId'])){
+			//查询地址
+			$AddressData = $Address -> where(['user_id'=>$user_id,'address_id'=>$_REQUEST['addressId']]) ->find();
+		}else{
+			//查询默认地址
+			$AddressData = $Address -> where(['user_id'=>$user_id,'Default'=>1]) ->find();
+		}
+		//查询商品
+		$goodsList = $GoodsCar -> productMsg()->with('property') ->where('product_id',$product_id) ->find();
+		$data = Array(
+			'AddressData' => $AddressData,
+			'goodsList'	  => $goodsList
+		);
+		if($Address && $GoodsCar){
+			$arrayName = Array('code'=>0,'data'=>$data,'msg'=>'加载成功');
 		}else{
 			$arrayName = Array('code'=>0,'data'=>Array(),'msg'=>'加载失败');
 		}

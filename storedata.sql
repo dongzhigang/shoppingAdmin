@@ -11,7 +11,7 @@
  Target Server Version : 50547
  File Encoding         : 65001
 
- Date: 13/09/2018 18:50:19
+ Date: 14/09/2018 18:28:39
 */
 
 SET NAMES utf8mb4;
@@ -24,16 +24,23 @@ DROP TABLE IF EXISTS `address`;
 CREATE TABLE `address`  (
   `address_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '地址id',
   `user_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户id',
-  `receiver_name` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '收货人',
-  `receiver_phone` varchar(11) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '固定电话',
-  `receiver_mobile` varchar(11) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '移动电话',
-  `receiver_state` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '省份',
-  `receiver_city` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '城市',
-  `receiver_district` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '区/县',
-  `receiver_address` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '详细地址',
-  `receiver_code` varchar(6) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '邮政编码',
-  `default` int(1) NULL DEFAULT NULL COMMENT '是否默认,1是默认，0不是'
+  `name` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '收货人',
+  `phone` varchar(11) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '固定电话',
+  `mobile` varchar(11) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '移动电话',
+  `provinceName` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '省份',
+  `cityName` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '城市',
+  `areaName` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '区/县',
+  `address` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '详细地址',
+  `code` varchar(6) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '邮政编码',
+  `Default` int(1) NULL DEFAULT NULL COMMENT '是否默认,1是默认，0不是'
 ) ENGINE = MyISAM CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '收货地址表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of address
+-- ----------------------------
+INSERT INTO `address` VALUES ('5ac560c1174749245cec32aaeac857f9', '1', '牵着蜗牛去逛街', '020-1234567', '13632482567', '广东省', '广州市', '天河区', '壬壬丰大夏壬丰大夏壬丰大夏丰大夏', '000000', 1);
+INSERT INTO `address` VALUES ('5488854922445b84e722dd7996d1e745', '1', '董先生', '', '13632482567', '广东省', '广州市', '荔湾区', '石牌桥', '000000', 0);
+INSERT INTO `address` VALUES ('0a00c63e27c4d51654ad99f7ce2b72c1', '1', 'hdh', '', '13632482567', '北京市', '北京市', '东城区', 'jj', '000000', 0);
 
 -- ----------------------------
 -- Table structure for advertis
@@ -196,10 +203,9 @@ CREATE TABLE `goods_car`  (
 -- ----------------------------
 -- Records of goods_car
 -- ----------------------------
-INSERT INTO `goods_car` VALUES ('3f072ff6d654ed3a6981f0d6a11e21b6', '4', '1', 4, 1, '2018-09-13 15:47:14', '2018-09-13 16:14:49');
+INSERT INTO `goods_car` VALUES ('3f072ff6d654ed3a6981f0d6a11e21b6', '4', '1', 4, 1, '2018-09-13 15:47:14', '2018-09-14 18:26:55');
 INSERT INTO `goods_car` VALUES ('96b17dced42c55d809f6ee825ab23bc5', '2', '1', 2, 1, '2018-09-13 15:47:23', '2018-09-13 15:47:23');
 INSERT INTO `goods_car` VALUES ('3ca95c7dd80e667d6ffe3b077ba53927', '1', '1', 1, 1, '2018-09-13 15:47:31', '2018-09-13 15:47:31');
-INSERT INTO `goods_car` VALUES ('64a10dded7f0c4b86fcfbf749918beb2', '3', '1', 3, 2, '2018-09-13 15:48:16', '2018-09-13 15:48:16');
 
 -- ----------------------------
 -- Table structure for order

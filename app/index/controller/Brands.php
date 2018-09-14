@@ -8,6 +8,7 @@ use app\index\Model\ProductMsg;
  */
 class Brands extends Controller
 {
+	//品牌列表
 	public function brandList()
 	{
 		$page = $_REQUEST['page'];
@@ -21,6 +22,7 @@ class Brands extends Controller
 		}
 		return json($arrayName);
 	}
+	//品牌详情
 	public function brandInfo()
 	{
 		$id = $_REQUEST['id'];
