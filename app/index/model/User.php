@@ -7,9 +7,18 @@ use think\Model;
 class User extends Model
 {
 	public function getImgUrlAttr($value)
+	{	
+		if($value){
+			$value = 'shoppingAdmin/'.$value;
+		}
+		return $value;
+	}
+	public function getNickNameAttr($value)
 	{
-		$val = 'shoppingAdmin/'.$value;
-		return $val;
+		if(!$value){
+			$value = '游客';
+		}
+		return $value;
 	}
 }
 ?>

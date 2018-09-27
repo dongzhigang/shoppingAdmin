@@ -15,7 +15,7 @@ class Addresss extends Controller
 			'user_id'	=>	$user_id
 		);
 		$Address = new Address;
-		$list = $Address -> where($data) -> select();
+		$list = $Address -> where($data)->order('Default desc') -> select();
 		if($Address){
 			$arrayName = Array('code'=>0,'data'=>$list,'msg'=>'添加成功');
 		}else{
@@ -54,6 +54,7 @@ class Addresss extends Controller
 		//判断地址id是否有值，有值为更新，则为新增
 		if(isset($_REQUEST['id'])){	
 			$id = $_REQUEST['id'];
+			$data['time_update'] = date('Y-m-d H-i-s');
 			//判断是否有默认地址;
 			if($res){
 				//只能存在一个默认地址，如果存在默认地址，就不能设置默认地址
@@ -75,6 +76,7 @@ class Addresss extends Controller
 				}
 			}
 		}else{
+			$data['time_create'] = date('Y-m-d H-i-s');
 			//判断是否有默认地址
 			if($res){
 				//只能存在一个默认地址，如果存在默认地址，就不能设置默认地址

@@ -11,7 +11,7 @@
  Target Server Version : 50547
  File Encoding         : 65001
 
- Date: 14/09/2018 18:28:39
+ Date: 27/09/2018 18:37:18
 */
 
 SET NAMES utf8mb4;
@@ -32,15 +32,17 @@ CREATE TABLE `address`  (
   `areaName` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '区/县',
   `address` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '详细地址',
   `code` varchar(6) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '邮政编码',
-  `Default` int(1) NULL DEFAULT NULL COMMENT '是否默认,1是默认，0不是'
+  `Default` int(1) NULL DEFAULT NULL COMMENT '是否默认,1是默认，0不是',
+  `time_create` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `time_update` datetime NULL DEFAULT NULL COMMENT '更新时间'
 ) ENGINE = MyISAM CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '收货地址表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of address
 -- ----------------------------
-INSERT INTO `address` VALUES ('5ac560c1174749245cec32aaeac857f9', '1', '牵着蜗牛去逛街', '020-1234567', '13632482567', '广东省', '广州市', '天河区', '壬壬丰大夏壬丰大夏壬丰大夏丰大夏', '000000', 1);
-INSERT INTO `address` VALUES ('5488854922445b84e722dd7996d1e745', '1', '董先生', '', '13632482567', '广东省', '广州市', '荔湾区', '石牌桥', '000000', 0);
-INSERT INTO `address` VALUES ('0a00c63e27c4d51654ad99f7ce2b72c1', '1', 'hdh', '', '13632482567', '北京市', '北京市', '东城区', 'jj', '000000', 0);
+INSERT INTO `address` VALUES ('b86f3286e5ead46b638e72812d85d5fa', '3e5f208baaa6b3a370aaade99c1cb88b', 'hh', '', '13512345678', '北京市', '北京市', '东城区', '222', '000000', 0, '2018-09-27 15:13:10', NULL);
+INSERT INTO `address` VALUES ('9d12b61f10f5834529505a66084ad519', '25e1ee5c5bde4bb8a2f791d3393b2fdf', '董先生', '', '13632482567', '北京市', '北京市', '东城区', '壬丰大夏', '000000', 0, NULL, NULL);
+INSERT INTO `address` VALUES ('24df3abe23ee61ec65eac21e489b0723', '3e5f208baaa6b3a370aaade99c1cb88b', '董先生', '', '13612345678', '北京市', '北京市', '东城区', '1111', '000000', 0, '2018-09-27 15:08:13', '2018-09-27 15:13:27');
 
 -- ----------------------------
 -- Table structure for advertis
@@ -93,13 +95,14 @@ CREATE TABLE `brand`  (
   `img` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '品牌图片',
   `bot_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '最低价格',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '品牌表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '品牌表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of brand
 -- ----------------------------
 INSERT INTO `brand` VALUES (1, 'iPhone', '苹果手机苹果手机苹果手机苹果手机', 'public/images/brand/5b8cf767186b5.jpg', 32.00);
 INSERT INTO `brand` VALUES (2, '小米', '小米手机小米手机小米手机小米手机小米手机小米手机', 'public/images/brand/7c918f37de108f3687d69b39daab34eb.png', 25.00);
+INSERT INTO `brand` VALUES (3, '华为', '华为华为华为', 'public/images/brand/5b8cf767186b5.jpg', 15.00);
 
 -- ----------------------------
 -- Table structure for cate
@@ -194,8 +197,8 @@ CREATE TABLE `goods_car`  (
   `cart_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '购物车id',
   `product_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '商品id',
   `user_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户id',
-  `property_id` int(10) NULL DEFAULT NULL COMMENT '属性id',
-  `num` int(10) NULL DEFAULT NULL COMMENT '数量',
+  `num` int(10) NULL DEFAULT NULL COMMENT '商品数量',
+  `property_val` varchar(50) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '属性值',
   `time_create` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `time_update` datetime NULL DEFAULT NULL COMMENT '更新时间'
 ) ENGINE = MyISAM CHARACTER SET = gbk COLLATE = gbk_chinese_ci ROW_FORMAT = Dynamic;
@@ -203,9 +206,8 @@ CREATE TABLE `goods_car`  (
 -- ----------------------------
 -- Records of goods_car
 -- ----------------------------
-INSERT INTO `goods_car` VALUES ('3f072ff6d654ed3a6981f0d6a11e21b6', '4', '1', 4, 1, '2018-09-13 15:47:14', '2018-09-14 18:26:55');
-INSERT INTO `goods_car` VALUES ('96b17dced42c55d809f6ee825ab23bc5', '2', '1', 2, 1, '2018-09-13 15:47:23', '2018-09-13 15:47:23');
-INSERT INTO `goods_car` VALUES ('3ca95c7dd80e667d6ffe3b077ba53927', '1', '1', 1, 1, '2018-09-13 15:47:31', '2018-09-13 15:47:31');
+INSERT INTO `goods_car` VALUES ('96df92077a0794533bb424a3b960c019', '4', '25e1ee5c5bde4bb8a2f791d3393b2fdf', 9, '标准', '2018-09-18 18:31:47', '2018-09-27 14:50:10');
+INSERT INTO `goods_car` VALUES ('0ecf0000542133155c0ef848e4d18d07', '1', '25e1ee5c5bde4bb8a2f791d3393b2fdf', 1, '28,红色', '2018-09-18 18:33:38', '2018-09-18 18:33:38');
 
 -- ----------------------------
 -- Table structure for order
@@ -213,11 +215,11 @@ INSERT INTO `goods_car` VALUES ('3ca95c7dd80e667d6ffe3b077ba53927', '1', '1', 1,
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order`  (
   `order_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '订单id',
-  `order_number` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '订单编号',
+  `order_number` varchar(100) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '订单编号',
   `payment` int(1) NULL DEFAULT NULL COMMENT '支付类型，1在线支付、2货到付款',
   `post_fee` varchar(50) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '邮费',
-  `status` int(1) NULL DEFAULT NULL COMMENT '订单状态，1未付款，2已付款，3未发货，4已发货，5交易成功，6交易关闭',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `status` int(1) NULL DEFAULT NULL COMMENT '订单状态，1未付款，2待发货，3待收货，4待评价，5已付款，6已发货，7交易成功，8交易关闭',
+  `add_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `payment_time` datetime NULL DEFAULT NULL COMMENT '付款时间',
   `consign_time` datetime NULL DEFAULT NULL COMMENT '发货时间',
@@ -226,8 +228,23 @@ CREATE TABLE `order`  (
   `user_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户id',
   `buyer_message` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '买家留言',
   `buyer_nick` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '买家昵称',
-  `buyer_raqte` int(1) NULL DEFAULT NULL COMMENT '买家是否评价'
+  `buyer_raqte` int(1) NULL DEFAULT NULL COMMENT '买家是否评价',
+  `goodsPrice` decimal(10, 2) NULL DEFAULT NULL COMMENT '商品合计',
+  `actualPrice` decimal(10, 2) NULL DEFAULT NULL COMMENT '商品实付'
 ) ENGINE = MyISAM CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '订单表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of order
+-- ----------------------------
+INSERT INTO `order` VALUES ('fe158d92700f0b144ae86173c3b591af', '201809181754165723846408', NULL, '0', 1, '2018-09-18 17:54:16', NULL, NULL, NULL, NULL, NULL, '25e1ee5c5bde4bb8a2f791d3393b2fdf', NULL, NULL, NULL, 100.00, 100.00);
+INSERT INTO `order` VALUES ('73abb27ff87d167143f53caa122822a8', '201809181754183055541913', NULL, '0', 1, '2018-09-18 17:54:18', NULL, NULL, NULL, NULL, NULL, '25e1ee5c5bde4bb8a2f791d3393b2fdf', NULL, NULL, NULL, 100.00, 100.00);
+INSERT INTO `order` VALUES ('d8db3e9159661c3635f18fce44106072', '201809181754248507232615', NULL, '0', 1, '2018-09-18 17:54:24', NULL, NULL, NULL, NULL, NULL, '25e1ee5c5bde4bb8a2f791d3393b2fdf', NULL, NULL, NULL, 100.00, 100.00);
+INSERT INTO `order` VALUES ('b9fdbb5b122470d9dc25eb03790c7480', '201809181757246972442605', NULL, '0', 1, '2018-09-18 17:57:24', NULL, NULL, NULL, NULL, NULL, '25e1ee5c5bde4bb8a2f791d3393b2fdf', NULL, NULL, NULL, 100.00, 100.00);
+INSERT INTO `order` VALUES ('57056af55197db94f793eeb06d6672a7', '201809181757536121276810', NULL, '0', 1, '2018-09-18 17:57:53', NULL, NULL, NULL, NULL, NULL, '25e1ee5c5bde4bb8a2f791d3393b2fdf', NULL, NULL, NULL, 100.00, 100.00);
+INSERT INTO `order` VALUES ('68dbc558661151ab149de00b365601e0', '201809181759004100891125', NULL, '0', 1, '2018-09-18 17:59:00', NULL, NULL, NULL, NULL, NULL, '25e1ee5c5bde4bb8a2f791d3393b2fdf', NULL, NULL, NULL, 100.00, 100.00);
+INSERT INTO `order` VALUES ('3f66b85c73d7a25cc08d6dc3af090279', '201809181759578266082798', NULL, '0', 1, '2018-09-18 17:59:57', NULL, NULL, NULL, NULL, NULL, '25e1ee5c5bde4bb8a2f791d3393b2fdf', NULL, NULL, NULL, 16.00, 16.00);
+INSERT INTO `order` VALUES ('e110f5f3d744e42097f34190e50f701b', '201809181801197981536804', NULL, '0', 1, '2018-09-18 18:01:19', NULL, NULL, NULL, NULL, NULL, '25e1ee5c5bde4bb8a2f791d3393b2fdf', NULL, NULL, NULL, 466.00, 466.00);
+INSERT INTO `order` VALUES ('28d12adbb5dbb7daeca8c9423ec395f5', '201809271453252712219225', NULL, '0', 1, '2018-09-27 14:53:25', NULL, NULL, NULL, NULL, NULL, '3e5f208baaa6b3a370aaade99c1cb88b', NULL, NULL, NULL, 100.00, 100.00);
 
 -- ----------------------------
 -- Table structure for order_item
@@ -238,10 +255,26 @@ CREATE TABLE `order_item`  (
   `order_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '订单id',
   `num` int(10) NULL DEFAULT NULL COMMENT '商品购物数量',
   `title` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '商品标题',
-  `price` bigint(50) NULL DEFAULT NULL COMMENT '商品单价',
-  `total_fee` bigint(50) NULL DEFAULT NULL COMMENT '商品总金额',
-  `pic_path` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '商品图片地址'
-) ENGINE = MyISAM CHARACTER SET = gbk COLLATE = gbk_chinese_ci ROW_FORMAT = Dynamic;
+  `price` decimal(50, 2) NULL DEFAULT NULL COMMENT '商品单价',
+  `total_fee` decimal(50, 2) NULL DEFAULT NULL COMMENT '商品总金额',
+  `pic_path` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '商品图片地址',
+  `property_val` varchar(50) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '属性值'
+) ENGINE = MyISAM CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '订单商品表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of order_item
+-- ----------------------------
+INSERT INTO `order_item` VALUES ('4', 'fe158d92700f0b144ae86173c3b591af', 1, '宠物', 100.00, 100.00, 'shoppingAdmin/public/images/thumbnail/5b8cf75d2583d.jpg', '标准');
+INSERT INTO `order_item` VALUES ('4', '73abb27ff87d167143f53caa122822a8', 1, '宠物', 100.00, 100.00, 'shoppingAdmin/public/images/thumbnail/5b8cf75d2583d.jpg', '标准');
+INSERT INTO `order_item` VALUES ('4', 'd8db3e9159661c3635f18fce44106072', 1, '宠物', 100.00, 100.00, 'shoppingAdmin/public/images/thumbnail/5b8cf75d2583d.jpg', '标准');
+INSERT INTO `order_item` VALUES ('4', 'b9fdbb5b122470d9dc25eb03790c7480', 1, '宠物', 100.00, 100.00, 'shoppingAdmin/public/images/thumbnail/5b8cf75d2583d.jpg', '标准');
+INSERT INTO `order_item` VALUES ('4', '57056af55197db94f793eeb06d6672a7', 1, '宠物', 100.00, 100.00, 'shoppingAdmin/public/images/thumbnail/5b8cf75d2583d.jpg', '标准');
+INSERT INTO `order_item` VALUES ('4', '68dbc558661151ab149de00b365601e0', 1, '宠物', 100.00, 100.00, 'shoppingAdmin/public/images/thumbnail/5b8cf75d2583d.jpg', '标准');
+INSERT INTO `order_item` VALUES ('1', '3f66b85c73d7a25cc08d6dc3af090279', 1, '苹果', 16.00, 16.00, 'shoppingAdmin/public/images/thumbnail/5b8cf75d2583d.jpg', '28,红色');
+INSERT INTO `order_item` VALUES ('4', 'e110f5f3d744e42097f34190e50f701b', 3, '宠物', 100.00, 300.00, 'shoppingAdmin/public/images/thumbnail/5b8cf75d2583d.jpg', '标准');
+INSERT INTO `order_item` VALUES ('2', 'e110f5f3d744e42097f34190e50f701b', 1, '手机', 120.00, 120.00, 'shoppingAdmin/public/images/thumbnail/a8b0a5def7d64e411dd98bdfb1fc989b.png', '标准');
+INSERT INTO `order_item` VALUES ('3', 'e110f5f3d744e42097f34190e50f701b', 1, '女装', 46.00, 46.00, 'shoppingAdmin/public/images/thumbnail/a8b0a5def7d64e411dd98bdfb1fc989b.png', '标准');
+INSERT INTO `order_item` VALUES ('4', '28d12adbb5dbb7daeca8c9423ec395f5', 1, '宠物', 100.00, 100.00, 'shoppingAdmin/public/images/thumbnail/5b8cf75d2583d.jpg', '标准');
 
 -- ----------------------------
 -- Table structure for order_shipping
@@ -249,15 +282,25 @@ CREATE TABLE `order_item`  (
 DROP TABLE IF EXISTS `order_shipping`;
 CREATE TABLE `order_shipping`  (
   `order_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '订单id',
-  `receiver_name` varchar(20) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '收货人全名',
-  `receiver_phone` varchar(20) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '固定电话',
-  `receiver_mobile` varchar(30) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '移动电话',
-  `receiver_state` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '省份',
-  `receiver_city` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '城市',
-  `receiver_district` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '区/县',
-  `receiver_address` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '收货地址',
-  `receiver_code` varchar(6) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '邮政编码'
-) ENGINE = MyISAM CHARACTER SET = gbk COLLATE = gbk_chinese_ci ROW_FORMAT = Dynamic;
+  `name` varchar(20) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '收货人全名',
+  `phone` varchar(20) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '固定电话',
+  `mobile` varchar(30) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '移动电话',
+  `address` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '收货地址',
+  `code` varchar(6) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '邮政编码'
+) ENGINE = MyISAM CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '物流表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of order_shipping
+-- ----------------------------
+INSERT INTO `order_shipping` VALUES ('fe158d92700f0b144ae86173c3b591af', '董先生', '', '13632482567', '北京市北京市东城区壬丰大夏', '000000');
+INSERT INTO `order_shipping` VALUES ('73abb27ff87d167143f53caa122822a8', '董先生', '', '13632482567', '北京市北京市东城区壬丰大夏', '000000');
+INSERT INTO `order_shipping` VALUES ('d8db3e9159661c3635f18fce44106072', '董先生', '', '13632482567', '北京市北京市东城区壬丰大夏', '000000');
+INSERT INTO `order_shipping` VALUES ('b9fdbb5b122470d9dc25eb03790c7480', '董先生', '', '13632482567', '北京市北京市东城区壬丰大夏', '000000');
+INSERT INTO `order_shipping` VALUES ('57056af55197db94f793eeb06d6672a7', '董先生', '', '13632482567', '北京市北京市东城区壬丰大夏', '000000');
+INSERT INTO `order_shipping` VALUES ('68dbc558661151ab149de00b365601e0', '董先生', '', '13632482567', '北京市北京市东城区壬丰大夏', '000000');
+INSERT INTO `order_shipping` VALUES ('3f66b85c73d7a25cc08d6dc3af090279', '董先生', '', '13632482567', '北京市北京市东城区壬丰大夏', '000000');
+INSERT INTO `order_shipping` VALUES ('e110f5f3d744e42097f34190e50f701b', '董先生', '', '13632482567', '北京市北京市东城区壬丰大夏', '000000');
+INSERT INTO `order_shipping` VALUES ('28d12adbb5dbb7daeca8c9423ec395f5', '董先生', '', '13612345678', '北京市北京市东城区1111', '000000');
 
 -- ----------------------------
 -- Table structure for parameter
@@ -269,12 +312,13 @@ CREATE TABLE `parameter`  (
   `value` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '参数值',
   `product_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '产品id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '商品参数表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '商品参数表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of parameter
 -- ----------------------------
 INSERT INTO `parameter` VALUES (1, '产地', '中国广东', '1');
+INSERT INTO `parameter` VALUES (2, '品牌', '华为', '1');
 
 -- ----------------------------
 -- Table structure for product_master
@@ -342,29 +386,80 @@ CREATE TABLE `product_sku`  (
   `product_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '产品id',
   `property_id` int(10) NULL DEFAULT NULL COMMENT '规格/属性id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '商品库存表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '商品库存表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of product_sku
+-- ----------------------------
+INSERT INTO `product_sku` VALUES (1, 12.00, 56, NULL, '1', 1);
+INSERT INTO `product_sku` VALUES (2, 15.00, 12, NULL, '2', 2);
+INSERT INTO `product_sku` VALUES (3, 15.00, 24, NULL, '3', 3);
+INSERT INTO `product_sku` VALUES (4, 15.00, 28, NULL, '4', 4);
+INSERT INTO `product_sku` VALUES (5, 15.00, 26, NULL, '5', 5);
+INSERT INTO `product_sku` VALUES (6, 15.00, 26, NULL, '1', 6);
 
 -- ----------------------------
 -- Table structure for property
 -- ----------------------------
 DROP TABLE IF EXISTS `property`;
 CREATE TABLE `property`  (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '属性id',
-  `name` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '属性名',
-  `value` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '属性值',
-  `img` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '图片',
-  `product_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '产品id',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '规格/属性表' ROW_FORMAT = Dynamic;
+  `name_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '属性id',
+  `value_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '属性值id',
+  `product_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '商品id'
+) ENGINE = MyISAM CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '属性、属性值、商品关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of property
 -- ----------------------------
-INSERT INTO `property` VALUES (1, '规格', '标准', NULL, '1');
-INSERT INTO `property` VALUES (2, '规格', '标准', NULL, '2');
-INSERT INTO `property` VALUES (3, '规格', '标准', NULL, '3');
-INSERT INTO `property` VALUES (4, '规格', '标准', NULL, '4');
-INSERT INTO `property` VALUES (5, '规格', '标准', NULL, '5');
+INSERT INTO `property` VALUES ('1', '1', '1');
+INSERT INTO `property` VALUES ('2', '2', '2');
+INSERT INTO `property` VALUES ('3', '3', '3');
+INSERT INTO `property` VALUES ('4', '4', '4');
+INSERT INTO `property` VALUES ('5', '5', '5');
+INSERT INTO `property` VALUES ('6', '6', '1');
+INSERT INTO `property` VALUES ('6', '7', '1');
+
+-- ----------------------------
+-- Table structure for property_name
+-- ----------------------------
+DROP TABLE IF EXISTS `property_name`;
+CREATE TABLE `property_name`  (
+  `name_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '属性id',
+  `name` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '规格/属性名',
+  `product_id` int(11) NULL DEFAULT NULL COMMENT '商品id'
+) ENGINE = MyISAM CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '规格/属性值表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of property_name
+-- ----------------------------
+INSERT INTO `property_name` VALUES ('1', '规格', 1);
+INSERT INTO `property_name` VALUES ('2', '规格', 2);
+INSERT INTO `property_name` VALUES ('3', '规格', 3);
+INSERT INTO `property_name` VALUES ('4', '规格', 4);
+INSERT INTO `property_name` VALUES ('5', '规格', 5);
+INSERT INTO `property_name` VALUES ('6', '颜色', 1);
+
+-- ----------------------------
+-- Table structure for property_value
+-- ----------------------------
+DROP TABLE IF EXISTS `property_value`;
+CREATE TABLE `property_value`  (
+  `value_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '属性值id',
+  `value` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '属性值',
+  `img` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '图片',
+  `name_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '产品id'
+) ENGINE = MyISAM CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '规格/属性名表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of property_value
+-- ----------------------------
+INSERT INTO `property_value` VALUES ('1', '28', NULL, '1');
+INSERT INTO `property_value` VALUES ('2', '标准', NULL, '2');
+INSERT INTO `property_value` VALUES ('3', '标准', NULL, '3');
+INSERT INTO `property_value` VALUES ('4', '标准', NULL, '4');
+INSERT INTO `property_value` VALUES ('5', '标准', NULL, '5');
+INSERT INTO `property_value` VALUES ('6', '红色', NULL, '6');
+INSERT INTO `property_value` VALUES ('7', '绿色', NULL, '6');
 
 -- ----------------------------
 -- Table structure for sort
@@ -393,23 +488,35 @@ INSERT INTO `sort` VALUES (3, '1002001', '宠物', NULL, 'public/images/classify
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '自增',
   `user_id` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户id',
+  `nickName` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '呢称',
   `userName` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户名',
   `password` varchar(32) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户密码',
   `imgUrl` varchar(255) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户头像',
-  `phone` varchar(11) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '手机号码',
-  `sex` int(1) NULL DEFAULT NULL COMMENT '性别。0是女，1是男',
-  `date_of_birth` date NULL DEFAULT NULL COMMENT '出生日期',
-  `grade` varchar(10) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '用户等级',
-  `state` int(1) NULL DEFAULT NULL COMMENT '用户状态，0不可用，1可用，2注销',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+  `mobile` varchar(11) CHARACTER SET gbk COLLATE gbk_chinese_ci NULL DEFAULT NULL COMMENT '手机号码',
+  `sex` int(1) NULL DEFAULT NULL COMMENT '性别。0是未知，1是女，2是男',
+  `birthday` date NULL DEFAULT NULL COMMENT '出生日期',
+  `userLevel` int(1) NULL DEFAULT NULL COMMENT '用户等级，0普通，1VIP，2高级VIP',
+  `state` int(1) NULL DEFAULT NULL COMMENT '用户状态，0可用，1禁用，2注销',
+  `time_create` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `time_update` datetime NULL DEFAULT NULL COMMENT '更新时间'
+) ENGINE = MyISAM CHARACTER SET = gbk COLLATE = gbk_chinese_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, '1', 'admin', '123456', 'public/images/user/5b8cf75d2583d.jpg', '10086', 1, '2017-12-10', '普通', 1);
-INSERT INTO `user` VALUES (2, '2', '123', '123', 'public/images/user/5b8cf75d2583d.jpg', '10086', 0, '2015-10-02', '普通', 1);
+INSERT INTO `user` VALUES ('25e1ee5c5bde4bb8a2f791d3393b2fdf', '张三', 'admin2', 'af26610db5e49dd014584b03cd4d3599', 'public/images/user/5b8cf75d2583d.jpg', '13632482567', 0, '1993-10-07', 0, 0, '2018-09-25 00:00:00', '2018-09-27 15:18:52');
+INSERT INTO `user` VALUES ('7d4cf78869933b8484059aa73682c680', NULL, '123456', '9cbf8a4dcb8e30682b927f352d6559a0', NULL, '13632482567', 0, '2018-09-26', 0, 0, '2018-09-26 00:00:00', NULL);
+INSERT INTO `user` VALUES ('4011ab3f72723a78129068a682820c7f', NULL, '444', '9cbf8a4dcb8e30682b927f352d6559a0', NULL, '13612345678', 0, '2018-09-26', 0, 0, '2018-09-26 00:00:00', NULL);
+INSERT INTO `user` VALUES ('8cc54a6e17e5ade6748b1948934cf766', NULL, '666', '9cbf8a4dcb8e30682b927f352d6559a0', NULL, '13612345678', 0, '2018-09-05', 0, 0, '2018-09-26 00:00:00', NULL);
+INSERT INTO `user` VALUES ('578c36da0b64aa4379927b04f235ee48', NULL, '777', '9cbf8a4dcb8e30682b927f352d6559a0', NULL, '13612345678', 0, '2018-09-05', 0, 0, '2018-09-26 00:00:00', NULL);
+INSERT INTO `user` VALUES ('44d48c84bc1cfac6a9d3244f2d2899cb', NULL, '888', '9cbf8a4dcb8e30682b927f352d6559a0', NULL, '13612345678', 0, '2018-09-12', 0, 0, '2018-09-26 00:00:00', NULL);
+INSERT INTO `user` VALUES ('d576faac06d4095ef9da98800d752809', NULL, '888', '9cbf8a4dcb8e30682b927f352d6559a0', NULL, '13612345678', 0, '2018-09-27', 0, 0, '2018-09-26 00:00:00', NULL);
+INSERT INTO `user` VALUES ('e553a1ccddf5d4bfa90d82699219cd56', NULL, '刘德华', '9cbf8a4dcb8e30682b927f352d6559a0', NULL, '13612345678', 0, '2018-09-20', 0, 0, '2018-09-26 00:00:00', NULL);
+INSERT INTO `user` VALUES ('a5f8389db9ea106858802ec8a56aad25', NULL, '11', '9cbf8a4dcb8e30682b927f352d6559a0', NULL, '13632482567', 0, '2018-09-19', 0, 0, '2018-09-26 12:09:46', NULL);
+INSERT INTO `user` VALUES ('e83987810fbc2d97a26377b8167dcdfd', NULL, '11', '9cbf8a4dcb8e30682b927f352d6559a0', NULL, '13632482567', 0, '2018-09-19', 0, 0, '2018-09-26 12:22:09', NULL);
+INSERT INTO `user` VALUES ('6b6a0475c80440dc39a4a23b867e5535', NULL, '1', '9cbf8a4dcb8e30682b927f352d6559a0', NULL, '13512345678', 0, '2018-09-20', 0, 0, '2018-09-26 12:24:23', NULL);
+INSERT INTO `user` VALUES ('953afbe8692015be17c21657d0904f12', NULL, '1a', '9cbf8a4dcb8e30682b927f352d6559a0', NULL, '13612345678', 0, '2018-09-05', 0, 0, '2018-09-26 12:26:25', NULL);
+INSERT INTO `user` VALUES ('3e5f208baaa6b3a370aaade99c1cb88b', NULL, 'admin', '9cbf8a4dcb8e30682b927f352d6559a0', NULL, '13632482567', 0, '1993-10-07', 0, 0, '2018-09-26 15:03:30', '2018-09-26 15:06:51');
 
 SET FOREIGN_KEY_CHECKS = 1;
