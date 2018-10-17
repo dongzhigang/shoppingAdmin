@@ -1,8 +1,8 @@
 <?php 
-namespace app\index\Model;
+namespace app\admin\Model;
 use think\Model;
 /**
- * 商品二级分类表
+ * 二类目表
  */
 class Sort extends Model
 {

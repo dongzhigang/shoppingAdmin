@@ -82,10 +82,22 @@ class Product extends Controller
 		$id = $_REQUEST['product_id'];
 		$ProductMsg = new ProductMsg();
 		$GeneralIssue = new GeneralIssue();
-		$productInfo = $ProductMsg ->where('product_id',$id)->with(['productMaster','Brand','propertyName'=>['value'],'parameter','comment'=>['commentImg','user']])->find();	//商品信息
+		$productInfo = $ProductMsg ->where('product_id',$id)->with(['productMaster','Brand','propertyName'=>['values'],'parameter','contents','comment'=>['commentImg','user']])->find();	//商品信息
 		$master = $productInfo->product_master;																							//商品主图
 		$property = $productInfo ->property_name;																						//商品规格
-		$parameter = $productInfo ->parameter;																							//商品参数表
+		$parameter = $productInfo ->parameter;
+		$contents = $productInfo ->contents;
+		$property_arr = array();		
+		foreach ($property as $k => $v) {
+			if(isset($property_arr[$v['name']])){
+				$arr = array_merge_recursive($property_arr[$v['name']]['values'],$v['values']);
+				$property_arr[$v['name']]['value'] = $arr;
+			}else{
+				$property_arr[$v['name']] = $v;
+				$property_arr[$v['name']]['value'] = $v['values'];
+			}
+		}
+		sort($property_arr);
 		if($productInfo  ->comment){
 			$commentlist[0] = $productInfo  ->comment[0];																				//商品评论
 		}else{
@@ -96,10 +108,11 @@ class Product extends Controller
 		$data = array(
 			'productInfo' 	=> 	$productInfo,
 			'master'		=>	$master,
-			'property'		=>	$property,
+			'property'		=>	$property_arr,
 			'parameter'		=>	$parameter,
 			'commentlist'	=>	$commentlist,
-			'answer'	  	=> 	$answer
+			'answer'	  	=> 	$answer,
+			'contents'		=>	$contents
 		);
 		if($ProductMsg && $GeneralIssue){
 			$arrayName = array('code' => 0,'data' => $data ,'msg' => "加载成功" );

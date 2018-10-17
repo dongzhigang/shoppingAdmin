@@ -28,8 +28,8 @@ class Brands extends Controller
 		$id = $_REQUEST['id'];
 		$Brand = new Brand;
 		$ProductMsg = new ProductMsg;
-		$find = $Brand ->where('id',$id)->find();
-		$list = $ProductMsg -> where('brand_id',$id)->select();
+		$find = $Brand ->where(['id'=>$id])->find();
+		$list = $ProductMsg -> where(['sell'=>1,'brand_id'=>$id])->select();
 		$data = Array(
 			'brand' => $find,
 			'goodsList' => $list

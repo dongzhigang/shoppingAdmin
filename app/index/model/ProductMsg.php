@@ -6,11 +6,11 @@ use think\Model;
  */
 class ProductMsg extends Model
 {
-	public function getImgAttr($value)
-	{
-		$val = 'shoppingAdmin/'.$value;
-		return $val;
-	}
+	// public function getImgAttr($value)
+	// {
+	// 	$val = 'shoppingAdmin/'.$value;
+	// 	return $val;
+	// }
 	//关联商品主图表
     public function productMaster()
 	{
@@ -26,7 +26,7 @@ class ProductMsg extends Model
 	{
 		return $this->hasMany('Property','product_id','product_id'); 
 	}
-	//关联属性表
+	//关联属性值表
     public function propertyName()
 	{
 		return $this->hasMany('PropertyName','product_id','product_id'); 
@@ -35,6 +35,11 @@ class ProductMsg extends Model
     public function parameter()
 	{
 		return $this->hasMany('Parameter','product_id','product_id'); 
+	}
+	//关联商品详情表
+    public function contents()
+	{
+		return $this->belongsTo('Contents','product_id','product_id'); 
 	}
 	//关联商品一级分类表
     public function cate()

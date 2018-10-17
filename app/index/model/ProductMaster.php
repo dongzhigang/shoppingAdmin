@@ -6,10 +6,10 @@ use think\Model;
  */
 class ProductMaster extends Model
 {
-	public function getPathImgAttr($value)
-	{
-		$val = 'shoppingAdmin/'.$value;
-		return $val;
-	}
+	// public function getPathImgAttr($value)
+	// {
+	// 	$val = 'shoppingAdmin/'.$value;
+	// 	return $val;
+	// }
 }
 ?>

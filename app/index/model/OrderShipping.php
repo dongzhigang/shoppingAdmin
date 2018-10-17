@@ -2,10 +2,10 @@
 namespace app\index\Model;
 use think\Model;
 /**
- * 商品二级分类表
+ * 物流表
  */
-class Sort extends Model
+class OrderShipping extends Model
 {
-
+	
 }
 ?>

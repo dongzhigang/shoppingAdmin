@@ -36,10 +36,9 @@ class Home extends Controller
 	public function productList()
 	{
 		$Cate = new Cate;
-		$list = $Cate ->with('productMsg') ->select();
-		// return json($list);
-		// exit;
-		if($Cate){
+		$list = $Cate ->with(['productMsg'=>function($query){$query->where('sell',1);}]) ->select();
+		// dump($list);
+		if($list){
 			return $list;
 		}else{
 			return false;
@@ -60,7 +59,7 @@ class Home extends Controller
 	public function newProduct()
 	{
 		$ProductMsg = new ProductMsg;
-		$list = $ProductMsg ->where('new_product',1)->order('time desc')->limit(4)->select();
+		$list = $ProductMsg ->where(['sell'=>1,'new_product'=>1])->order('time_create desc')->limit(4)->select();
 		if($ProductMsg){
 			return $list;
 		}else{
@@ -71,7 +70,7 @@ class Home extends Controller
 	public function hotSale()
 	{
 		$ProductMsg = new ProductMsg;
-		$list = $ProductMsg ->where('hot_sale',1)->order('time desc')->limit(4)->select();
+		$list = $ProductMsg ->where(['sell'=>1,'hot_sale'=>1])->order('time_create desc')->limit(4)->select();
 		if($ProductMsg){
 			return $list;
 		}else{

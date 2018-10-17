@@ -2,10 +2,10 @@
 namespace app\index\Model;
 use think\Model;
 /**
- * 商品二级分类表
+ * 属性值表
  */
-class Sort extends Model
+class PropertyValue extends Model
 {
-
+	
 }
 ?>

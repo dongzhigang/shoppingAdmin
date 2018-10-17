@@ -2,10 +2,10 @@
 namespace app\index\Model;
 use think\Model;
 /**
- * 商品二级分类表
+ * 商品详情
  */
-class Sort extends Model
+class Contents extends Model
 {
-
+	
 }
 ?>

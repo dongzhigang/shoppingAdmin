@@ -2,6 +2,8 @@
 namespace app\index\Controller;
 use think\Controller;
 use app\index\Model\Comment;
+use app\index\Controller\Common;
+use app\index\Model\Order;
 /**
  * 评论接口
  */
@@ -58,6 +60,51 @@ class Comments extends Controller
 			$arrayName = array('code' => -1,'data' => array('') ,'msg' => "加载失败" );
 		}
 		return json($arrayName);
+	}
+	//发表评论
+	public function commentAdd()
+	{
+		$Comment = new Comment;
+		$Common = new Common;
+		$Order = new Order;
+		$comments = '/comment';					//评论图片路径
+		$user_id = $_REQUEST['user_id'];
+		$product_id = $_REQUEST['product_id'];
+		$content = $_REQUEST['content'];
+		$picUrls = $_REQUEST['picUrls'];
+		$grade   = $_REQUEST['grade'];
+		$order_id = $_REQUEST['order_id'];
+		$data = Array(
+			'comment_id' => md5(uniqid(md5(microtime(true)),true)),
+			'user_id' => $user_id,
+			'product_id' => $product_id,
+			'content'    => $content,
+			'grade'		 =>	$grade,
+			'add_date'	 => date('Y-m-d H:i:s')
+		);
+		if ($picUrls) {
+			$CommentImg = explode(',',$picUrls);
+			$arr = Array();
+			foreach ($CommentImg as $k => $v) {
+				$v = $Common ->change($comments,$v);
+				$imgData = Array(
+					'comment_id'	=>	$data['comment_id'],
+					'pathUrl'		=>	$v,
+					'add_date'	 => date('Y-m-d H:i:s')
+				);
+				$arr[$k] = $imgData;
+			}
+			$res = $Comment ->commentImg() ->insertAll($arr);
+		}		
+		$res = $Comment ->save($data);
+		if($res){
+			$res = $Order ->where('order_id', $order_id) ->update(['status'=>7]);
+			$arrayName = Array('code' => 0, 'data' => Array(),'msg' => '发布成功');
+		}else{
+			$arrayName = Array('code' => -1, 'data' => Array(),'msg' => '发布失败');
+		}
+		return json($arrayName);
+
 	}
 }
 ?>

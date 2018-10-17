@@ -6,10 +6,10 @@ use think\Model;
  */
 class CommentImg extends Model
 {
-	public function getPathUrlAttr($value)
-	{
-		$val = 'shoppingAdmin/'.$value;
-		return $val;
-	}
+	// public function getPathUrlAttr($value)
+	// {
+	// 	$val = 'shoppingAdmin/'.$value;
+	// 	return $val;
+	// }
 }
 ?>

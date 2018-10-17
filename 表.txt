@@ -38,3 +38,5 @@
 物流表(order_shipping)：订单id(order_id)、收货人全名(receiver_name)、固定电话(receiver_phone)、移动电话(receiver_mobile)、省份(receiver_state)、城市(receiver_city)、区/县(receiver_district)、收获地址(receiver_address)、邮政编码(receiver_code)、地址id(address_id)
 
 地址表(address)：地址id(address_id)、用户id(user_id)、收货人全名(receiver_name)、固定电话(receiver_phone)、移动电话(receiver_mobile)、省份(receiver_state)、城市(receiver_city)、区/县(receiver_district)、收获地址(receiver_address)、邮政编码(receiver_code)、是否默认(default)
+
+收藏表(collect)：收藏id(collect_id)、用户id(user_id)、商品id(product_id)、添加时间(add_time)
