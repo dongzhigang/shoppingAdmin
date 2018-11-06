@@ -728,8 +728,10 @@ class Goods extends Controller
 
 		$number 		 = $_REQUEST['number'];
 		$name 			 = $_REQUEST['name'];
+		$product_id		 = $_REQUEST['product_id'];
 		$map['number']	 = ['like','%'.$number.'%'];
 		$map['name']	 = ['like','%'.$name.'%'];
+		$map['product_id']	 = ['like','%'.$product_id.'%'];
 		$ProductMsg = new ProductMsg;
 		$List = $ProductMsg ->where($map)->select();
 		$count = $ProductMsg ->where($map)->count();

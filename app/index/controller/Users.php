@@ -15,7 +15,13 @@ class Users extends Controller
 		$User = new User;
 		$res = $User -> where(['userName'=>$userName,'password'=>md5($password)]) -> find();
 		if ($res) {
-			$arrayName = Array('code'=>0,'data'=>$res,'msg'=>'登录成功');
+			if($res->state==1){
+				$arrayName = Array('code'=>1,'data'=>$res,'msg'=>'账号禁用');
+			}else if($res->state==2){
+				$arrayName = Array('code'=>2,'data'=>$res,'msg'=>'账号注销');
+			}else{
+				$arrayName = Array('code'=>0,'data'=>$res,'msg'=>'登录成功');
+			}
 		}else{
 			$arrayName = Array('code'=>-1,'data'=>Array(),'msg'=>'账号或密码错误');
 		}

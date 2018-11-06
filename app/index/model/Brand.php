@@ -6,10 +6,6 @@ use think\Model;
  */
 class Brand extends Model
 {
-	public function getImgAttr($value)
-	{
-		$val = 'shoppingAdmin/'.$value;
-		return $val;
-	}	
+
 }
 ?>

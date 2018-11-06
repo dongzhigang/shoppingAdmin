@@ -1,11 +1,11 @@
 <?php 
-namespace app\index\Model;
+namespace app\admin\Model;
 use think\Model;
 /**
- * 广告表模型
+ * 广告表
  */
 class Advertis extends Model
 {
-
+	
 }
 ?>

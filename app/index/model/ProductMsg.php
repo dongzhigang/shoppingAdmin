@@ -19,7 +19,7 @@ class ProductMsg extends Model
 	//关联品牌表
     public function brand()
 	{
-		return $this->belongsTo('Brand','brand_id','id'); //注意，此处的外键是Product表的外键字段名、('关联模型名','外键名','主键名',['模型别名定义'])
+		return $this->belongsTo('Brand','brand_id','brand_id'); //注意，此处的外键是Product表的外键字段名、('关联模型名','外键名','主键名',['模型别名定义'])
 	}
 	//关联属性表
     public function property()

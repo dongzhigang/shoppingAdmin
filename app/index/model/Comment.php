@@ -9,7 +9,7 @@ class Comment extends Model
 	//关联评论图片表
     public function commentImg()
 	{
-		return $this->hasMany('CommentImg','comment_id','id'); 
+		return $this->hasMany('CommentImg','comment_id','comment_id'); 
 	}
 	//关联用户表
     public function user()

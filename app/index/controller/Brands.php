@@ -25,16 +25,16 @@ class Brands extends Controller
 	//品牌详情
 	public function brandInfo()
 	{
-		$id = $_REQUEST['id'];
+		$brand_id = $_REQUEST['brand_id'];
 		$Brand = new Brand;
 		$ProductMsg = new ProductMsg;
-		$find = $Brand ->where(['id'=>$id])->find();
-		$list = $ProductMsg -> where(['sell'=>1,'brand_id'=>$id])->select();
+		$find = $Brand ->where(['brand_id'=>$brand_id])->find();
+		$list = $ProductMsg -> where(['sell'=>1,'brand_id'=>$brand_id])->select();
 		$data = Array(
 			'brand' => $find,
 			'goodsList' => $list
 		);
-		if($list){
+		if($find){
 			$arrayName = array('code' => 0, 'data' => $data , 'msg' => "加载完成");
 		}else{
 			$arrayName = array('code' => -1, 'data' => Array() , 'msg' => "加载失败");

@@ -9,7 +9,7 @@ class GoodsCar extends Model
 	//关联商品主图表
     public function productMsg()
 	{
-		return $this->belongsTo('ProductMsg','product_id','id'); 
+		return $this->belongsTo('ProductMsg','product_id','product_id'); 
 	}
 
 }

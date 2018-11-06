@@ -52,7 +52,7 @@ class Common extends Controller
 	{	
 		$path = str_replace('/tem',$name,$img);
 		$arr = explode('/',$path);
-		// array_splice($arr,0,4);
+		array_splice($arr,0,4);
 		array_splice($arr,-1);
 		$str  = implode('/',$arr);						//新的目录
 		if(!is_dir($str)){
